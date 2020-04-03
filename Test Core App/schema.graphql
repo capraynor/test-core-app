@@ -1,0 +1,202 @@
+schema {
+  query: NorthwindQuery
+}
+
+type CategoryType {
+  categoryId: Int!
+  categoryName: String!
+  description: String!
+  picture: String!
+  products: [ProductType]
+}
+
+type CustomerType {
+  address: String!
+  city: String!
+  companyName: String!
+  contactName: String!
+  contactTitle: String!
+  country: String!
+  customerId: String!
+  fax: String!
+  orders: [OrderType]
+  phone: String!
+  postalCode: String!
+  region: String!
+}
+
+"""
+The `Date` scalar type represents a year, month and day in accordance with the
+[ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) standard.
+"""
+scalar Date
+
+"""
+The `DateTime` scalar type represents a date and time. `DateTime` expects
+timestamps to be formatted in accordance with the
+[ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) standard.
+"""
+scalar DateTime
+
+"""
+The `DateTimeOffset` scalar type represents a date, time and offset from UTC.
+`DateTimeOffset` expects timestamps to be formatted in accordance with the
+[ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) standard.
+"""
+scalar DateTimeOffset
+
+scalar Decimal
+
+type EmployeeTerritoryType {
+  employee: EmployeeType
+  employeeId: Int!
+  territory: TerritoryType
+  territoryId: String!
+}
+
+type EmployeeType {
+  address: String!
+  birthDate: Date
+  city: String!
+  country: String!
+  employeeId: Int!
+  employeeTerritories: [EmployeeTerritoryType]
+  extension: String!
+  firstName: String!
+  hireDate: Date
+  homePhone: String!
+  lastName: String!
+  notes: String!
+  orders: [OrderType]
+  photo: String!
+  photoPath: String!
+  postalCode: String!
+  region: String!
+  reportsTo: Int
+  subordinates: [EmployeeType]
+  superior: EmployeeType
+  title: String!
+  titleOfCourtesy: String!
+}
+
+"""
+The `Milliseconds` scalar type represents a period of time represented as the total number of milliseconds.
+"""
+scalar Milliseconds
+
+type NorthwindQuery {
+  categories: [CategoryType]
+  category(id: Int = null): CategoryType
+  customer(id: String = null): CustomerType
+  customers: [CustomerType]
+  employee(id: Int = null): EmployeeType
+  employees: [EmployeeType]
+  order(id: Int = null): OrderType
+  orderdetail(orderID: Int = null, productID: Int = null): OrderDetailType
+  orderdetails: [OrderDetailType]
+  orders: [OrderType]
+  product(id: Int = null): ProductType
+  products: [ProductType]
+  region(id: Int = null): RegionType
+  regions: [RegionType]
+  shipper(id: Int = null): ShipperType
+  shippers: [ShipperType]
+  supplier(id: Int = null): SupplierType
+  suppliers: [SupplierType]
+  territories: [TerritoryType]
+  territory(id: String = null): TerritoryType
+}
+
+type OrderDetailType {
+  discount: Float!
+  order: [OrderType]
+  orderId: Int!
+  product: ProductType
+  productId: Int!
+  quantity: Int!
+  unitPrice: Decimal!
+}
+
+type OrderType {
+  customer: CustomerType
+  customerId: String!
+  employee: EmployeeType
+  employeeId: Int
+  freight: Decimal
+  orderDate: Date
+  orderDetails: [OrderDetailType]
+  orderId: Int!
+  requiredDate: Date
+  shipAddress: String!
+  shipCity: String!
+  shipCountry: String!
+  shipName: String!
+  shippedDate: Date
+  shipper: ShipperType
+  shipPostalCode: String!
+  shipRegion: String!
+  shipVia: Int
+}
+
+type ProductType {
+  category: CategoryType
+  categoryId: Int
+  discontinued: Boolean!
+  orderDetails: [OrderDetailType]
+
+  """Product ID"""
+  productId: Int!
+
+  """Product Name"""
+  productName: String!
+  quantityPerUnit: String!
+  reorderLevel: Int
+  supplier: SupplierType
+  supplierId: Int
+  unitPrice: Decimal
+  unitsInStock: Int
+  unitsOnOrder: Int
+}
+
+type RegionType {
+  regionDescription: String!
+  regionId: Int!
+  territories: [TerritoryType]
+}
+
+"""
+The `Seconds` scalar type represents a period of time represented as the total number of seconds.
+"""
+scalar Seconds
+
+type ShipperType {
+  companyName: String!
+  orders: [OrderType]
+  phone: String!
+  shipperId: Int!
+}
+
+type SupplierType {
+  address: String!
+  city: String!
+  companyName: String!
+  contactName: String!
+  contactTitle: String!
+  country: String!
+  fax: String!
+  homePage: String!
+  phone: String!
+  postalCode: String!
+  products: [ProductType]
+  region: String!
+  supplierId: Int!
+}
+
+type TerritoryType {
+  employeeTerritories: [EmployeeTerritoryType]
+  region: RegionType
+  regionId: Int!
+  territoryDescription: String!
+  territoryId: String!
+}
+
